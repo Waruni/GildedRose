@@ -10,14 +10,15 @@ namespace GildedRose.Tests
         [Test]
         public void when_the_sell_in_has_passed_quality_degrades_twice_as_fast()
         {
-            var item = UpdateQuality(new Item { Name = "Conjured Mana Cake", SellIn = 0, Quality = 2 });
+            var item = UpdateQuality(new Item { Name = "some item", SellIn = 1, Quality = 2 });
             Assert.That(item.Quality, Is.EqualTo(0));
+            Assert.That(item.SellIn, Is.EqualTo(0));
         }
 
         [Test]
         public void when_the_quality_of_an_item_is_never_negative()
         {
-            var item = UpdateQuality(new Item { Name = "Conjured Mana Cake", SellIn = 2, Quality = 0 });
+            var item = UpdateQuality(new Item { Name = "some item", SellIn = 2, Quality = 0 });
             Assert.That(item.Quality, Is.EqualTo(0));
         }
 
@@ -28,12 +29,12 @@ namespace GildedRose.Tests
             Assert.That(item.Quality, Is.EqualTo(2));
         }
 
-        // [Test]
-        //public void quality_should_never_more_than_fifty()
-        //{
-        //    var item = UpdateQuality(new Item { Name = "Backstage passes to a TAFKAL80ETC concert", Quality = 60, SellIn = 0 });
-        //    Assert.That(item.Quality, Is.EqualTo(50));
-        //}  
+        [Test]
+        public void quality_should_never_more_than_fifty()
+        {
+            var item = UpdateQuality(new Item { Name = "Backstage passes to a TAFKAL80ETC concert", Quality = 60, SellIn = 1 });
+            Assert.That(item.Quality, Is.EqualTo(50));
+        }  
  
 
         [Test]

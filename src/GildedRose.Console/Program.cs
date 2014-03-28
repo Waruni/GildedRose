@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace GildedRose.Console
 {
     public class Program
     {
         public IList<Item> Items;
-        static void Main(string[] args)
+        static void Main()
         {
             System.Console.WriteLine("OMGHAI!");
 
@@ -46,7 +45,7 @@ namespace GildedRose.Console
             {
                 case "Elixir of the Mongoose":
                 case "+5 Dexterity Vest":
-                    t.Quality = t.Quality > 0 ? t.Quality - 1 : t.Quality;
+                    t.Quality = t.Quality > 0 && t.Quality < 50 ? t.Quality - 1 : t.Quality;
                     t.SellIn = t.SellIn - 1;
                     break;
                 case "Aged Brie":
@@ -58,12 +57,16 @@ namespace GildedRose.Console
                     t.SellIn = t.SellIn;
                     break;
                 case "Backstage passes to a TAFKAL80ETC concert":
-                    t.Quality = CalculateQualityOfBackstagePass(t.SellIn, t.Quality);
+                    t.Quality = CalculateQualityOfBackstagePassItem(t.SellIn, t.Quality);
                     t.SellIn = t.SellIn - 1;
                     break;
 
                 case "Conjured Mana Cake":
-                    t.Quality = t.Quality > 0 ? t.Quality - 2 : t.Quality;
+                    t.Quality = t.Quality > 0 && t.Quality < 50 ? t.Quality - 2 : t.Quality;
+                    t.SellIn = t.SellIn - 1;
+                    break;
+                default:
+                    t.Quality = t.Quality > 0 && t.Quality < 50 ? t.Quality - 2 : t.Quality;
                     t.SellIn = t.SellIn - 1;
                     break;
             }
@@ -142,7 +145,7 @@ namespace GildedRose.Console
             }            
         } */
 
-        private static int CalculateQualityOfBackstagePass(int sellIn, int quality)
+        private static int CalculateQualityOfBackstagePassItem(int sellIn, int quality)
         {
             if (sellIn <= 0) return 0;
             if (sellIn > 0) quality++;
